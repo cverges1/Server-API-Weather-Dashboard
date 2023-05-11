@@ -1,0 +1,16 @@
+body{
+    background-color: beige;
+}
+
+header{
+    background-color: rgb(45, 108, 243);
+    color: whitesmoke;
+    width: 100%;
+}
+
+
+#forecast{
+    background-color: rgb(49, 166, 244);
+    border: solid black 1px;
+    width: 100%;
+}
