@@ -1,6 +1,5 @@
 var userInputEl = document.getElementById('user-input');
 var unitsInput = document.getElementById('units');
-var whichUnit = unitsInput.options[unitsInput.selectedIndex].value;
 var btnEl = document.getElementById('search-btn');
 var searchList = document.getElementById('saved');
 var mainCard = document.getElementById('main-card');
@@ -24,6 +23,7 @@ function submitForm (event){
     event.preventDefault();
 
     cityName = userInputEl.value;
+    var whichUnit = unitsInput.options[unitsInput.selectedIndex].value;
     console.log(whichUnit);
     cleanUp();
     saveSearch();
@@ -210,6 +210,7 @@ function saveSearch (){
 };
 
 function cleanUp (){
+  userInputEl.innerHTML = "";
   searchList.innerHTML = "";
   mainCard.innerHTML = "";
   date2.innerHTML = "";
@@ -225,9 +226,29 @@ function oneMoreTime(event){
 
   console.log("another",searchAgain.textContent)
 
-  userInputEl = searchAgain.textContent;
+  userInputEl.value = searchAgain.textContent;
 
-  console.log("another",userInputEl)
+  console.log("another1",userInputEl);
+
+  cityName = userInputEl.value;
+    var whichUnit = unitsInput.options[unitsInput.selectedIndex].value;
+    console.log(whichUnit);
+    cleanUp();
+    saveSearch();
+    var URL = 'https://api.openweathermap.org/geo/1.0/direct?q='+ cityName +'&limit=1&appid='+ApiKey;
+    fetch(URL)
+    .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log("city info......",data);
+            var lat = data[0].lat
+            var lon = data[0].lon
+            getWeather (lat,lon,whichUnit);
+          });
+        } else {
+          alert('Error: ' + response.statusText);
+        }
+      })
 }
 
 
