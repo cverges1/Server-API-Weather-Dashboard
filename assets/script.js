@@ -194,23 +194,13 @@ function getWeather (x,y,z){
 
 
 function saveSearch (){
-    var savedCity = userInputEl.value
+    var savedCity = userInputEl.value;
+    savedCityArr = savedCityArr.filter((city) => city != savedCity);
     savedCityArr.push(savedCity);
     localStorage.setItem('savedCity',JSON.stringify(savedCityArr));
-
-    for(var i=0; i<savedCityArr.length; i++){
-      var searchAgainLi = document.createElement('li');
-      searchList.append(searchAgainLi);
-      searchAgain = document.createElement('button');
-      searchAgain.textContent = savedCityArr[i];
-      searchAgain.setAttribute('class','again');
-      searchAgain.setAttribute('type','submit');
-      searchAgainLi.prepend(searchAgain);
-    }
 };
 
 function cleanUp (){
-  userInputEl.innerHTML = "";
   searchList.innerHTML = "";
   mainCard.innerHTML = "";
   date2.innerHTML = "";
@@ -220,13 +210,24 @@ function cleanUp (){
   date6.innerHTML = "";
 };
 
+function displaySearches(){
+  for(var i=0; i<savedCityArr.length; i++){
+    var searchAgainLi = document.createElement('li');
+    searchList.append(searchAgainLi);
+    searchAgain = document.createElement('button');
+    searchAgain.textContent = savedCityArr[i];
+    searchAgain.setAttribute('class','again');
+    searchAgain.setAttribute('type','click');
+    searchAgainLi.prepend(searchAgain);
+  };
+}
 
 function oneMoreTime(event){
   event.preventDefault();
 
   console.log("another",searchAgain.textContent)
 
-  userInputEl.value = searchAgain.textContent;
+  userInputEl.value = event.target.textContent;
 
   console.log("another1",userInputEl);
 
@@ -249,9 +250,18 @@ function oneMoreTime(event){
           alert('Error: ' + response.statusText);
         }
       })
-}
+
+      displaySearches();
+};
 
 
 btnEl.addEventListener('submit',submitForm);
-searchAgainFormEl.addEventListener('submit',oneMoreTime);
+// searchAgainFormEl.addEventListener('submit',oneMoreTime);
+searchAgainFormEl.addEventListener('click', function(event){
+  event.preventDefault();
+  if(event.target.localName === 'button'){
+    oneMoreTime(event);
+  }
+});
 
+displaySearches();
