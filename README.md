@@ -3,6 +3,8 @@
 # Description
 A dashboard to display a city's weather forecast for the next five days given a user's search input
 
+https://cverges1.github.io/Server-API-Weather-Dashboard/
+![ScreenShot](Untitled.jpg)
 # Installation
 
 N/A 
