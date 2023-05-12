@@ -27,6 +27,7 @@ function submitForm (event){
     console.log(whichUnit);
     cleanUp();
     saveSearch();
+    displaySearches();
     var URL = 'https://api.openweathermap.org/geo/1.0/direct?q='+ cityName +'&limit=1&appid='+ApiKey;
     fetch(URL)
     .then(function (response) {
@@ -230,7 +231,6 @@ function oneMoreTime(event){
   userInputEl.value = event.target.textContent;
 
   console.log("another1",userInputEl);
-
   cityName = userInputEl.value;
     var whichUnit = unitsInput.options[unitsInput.selectedIndex].value;
     console.log(whichUnit);
@@ -250,8 +250,9 @@ function oneMoreTime(event){
           alert('Error: ' + response.statusText);
         }
       })
-
       displaySearches();
+
+  
 };
 
 
